@@ -1,16 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div id="app">
+    <h1>Count Text Length</h1>
+    <p><input type="text" v-model="inputText" /></p>
+    <CharCount :params="charCountParams"></CharCount>
+    <p><button @click="reset()">Reset</button></p>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+//https://www.vuemastery.com/blog/getting-started-with-typescript-and-vuejs/
+import { defineComponent } from 'vue'
+import CharCount, { CharCountParams } from './components/CharCount.vue'
+
+// ADD STATE
+interface State {
+  inputText: string
+}
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
+  components: { 
+    CharCount 
+  },
+  data: (): State => {
+    return { inputText: '' }
+  },
+  methods: {
+    reset() {
+      this.inputText = ''
+    }
+  },
+  computed: {
+    charCountParams(): CharCountParams {
+      return {
+        inputText: this.inputText,
+        label: 'Count'
+      }
+    }
   }
 });
 </script>
